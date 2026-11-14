@@ -1,5 +1,11 @@
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: __dirname,
   typedRoutes: false,
   poweredByHeader: false,
   compress: true,
@@ -90,6 +96,7 @@ const nextConfig = {
   },
   webpack(config) {
     config.resolve.alias.canvas = false;
+    config.cache = false;
     return config;
   },
 };

@@ -62,13 +62,13 @@ export function HeroSearch() {
   }
 
   return (
-    <div ref={wrapperRef} className="relative mx-auto mt-8 max-w-xl">
+    <div ref={wrapperRef} className="relative mt-7 w-full max-w-xl">
       <form
         onSubmit={handleSubmit}
-        className="flex items-center rounded-xl border border-line bg-white p-1.5 transition-colors focus-within:border-ink"
+        className="flex items-center rounded-xl border border-neutral-200/90 bg-white p-1.5 shadow-xs transition-all focus-within:border-neutral-900 focus-within:shadow-md"
       >
         <div className="flex flex-1 items-center gap-2.5 px-3">
-          <Search size={17} className="text-muted shrink-0" />
+          <Search size={18} className="text-neutral-400 shrink-0" />
           <input
             ref={inputRef}
             aria-label="Search for a tool"
@@ -78,8 +78,8 @@ export function HeroSearch() {
               setOpen(true);
             }}
             onFocus={() => setOpen(true)}
-            placeholder="Search for a tool..."
-            className="w-full bg-transparent py-2 text-sm text-ink outline-none placeholder:text-muted/60"
+            placeholder="Search for a tool (e.g. PDF, image, text, SEO...)"
+            className="w-full bg-transparent py-2 text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
           />
           {query && (
             <button
@@ -88,7 +88,7 @@ export function HeroSearch() {
                 setQuery("");
                 inputRef.current?.focus();
               }}
-              className="rounded p-1 text-muted hover:text-ink"
+              className="rounded p-1 text-neutral-400 hover:text-neutral-900"
             >
               <X size={15} />
             </button>
@@ -96,7 +96,7 @@ export function HeroSearch() {
         </div>
         <button
           type="submit"
-          className="flex items-center gap-1.5 rounded-lg bg-ink px-4 py-2 text-xs font-semibold text-white transition hover:bg-neutral-800"
+          className="flex items-center gap-1.5 rounded-lg bg-neutral-950 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-neutral-800 shrink-0"
         >
           Search <ArrowRight size={13} />
         </button>
