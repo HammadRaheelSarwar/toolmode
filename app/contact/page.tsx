@@ -1,107 +1,169 @@
-"use client";
+import type { Metadata } from "next";
+import { Mail, Clock, HelpCircle, Shield, Bug, MessageSquare, Handshake } from "lucide-react";
+import { ContactForm } from "../../components/contact-form";
+import { SITE_NAME, SITE_URL, OFFICIAL_EMAIL } from "../../lib/seo-constants";
 
-import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+export const metadata: Metadata = {
+  title: "Contact ToolModeOn | Support and Inquiries",
+  description:
+    "Contact ToolModeOn for technical support, feedback, business inquiries and general assistance.",
+  alternates: {
+    canonical: `${SITE_URL}/contact`,
+  },
+  openGraph: {
+    title: "Contact ToolModeOn | Support and Inquiries",
+    description:
+      "Contact ToolModeOn for technical support, feedback, business inquiries and general assistance.",
+    url: `${SITE_URL}/contact`,
+    siteName: SITE_NAME,
+    images: [
+      {
+        url: `${SITE_URL}/logo-full.jpg`,
+        width: 1024,
+        height: 341,
+        alt: `Contact ${SITE_NAME}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact ToolModeOn | Support and Inquiries",
+    description:
+      "Contact ToolModeOn for technical support, feedback, business inquiries and general assistance.",
+    images: [`${SITE_URL}/logo-full.jpg`],
+  },
+};
 
-export default function Contact() {
-  const [email, setEmail] = useState<string | null>(null);
-  const [name, setName] = useState("");
-  const [from, setFrom] = useState("");
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("/api/public/contact")
-      .then((r) => r.json())
-      .then((body) => setEmail(body.email || null))
-      .catch(() => {});
-  }, []);
-
-  function openEmail(e: FormEvent) {
-    e.preventDefault();
-    if (!email) return;
-    const subject = encodeURIComponent(`ToolModeOn contact from ${name.trim() || from}`);
-    const body = encodeURIComponent(`${message.trim()}\n\nFrom: ${name.trim()} <${from.trim()}>`);
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-  }
+export default function ContactPage() {
+  const categories = [
+    {
+      title: "General Inquiries",
+      description: "General questions about ToolModeOn, tool features, and platform updates.",
+      icon: MessageSquare,
+    },
+    {
+      title: "Technical Support",
+      description: "Assistance with tool execution, browser compatibility, and workflow troubleshooting.",
+      icon: HelpCircle,
+    },
+    {
+      title: "Bug Reports",
+      description: "Report unexpected behavior, layout issues, or browser processing glitches.",
+      icon: Bug,
+    },
+    {
+      title: "Feedback & Suggestions",
+      description: "Share your ideas for new tools, enhancements, or platform usability improvements.",
+      icon: Clock,
+    },
+    {
+      title: "Business & Partnerships",
+      description: "Inquiries regarding integrations, business collaboration, and media requests.",
+      icon: Handshake,
+    },
+    {
+      title: "Privacy & Data Protection",
+      description: "Questions regarding data processing, privacy practices, and user rights.",
+      icon: Shield,
+    },
+  ];
 
   return (
-    <main>
-      <section className="border-b border-line bg-pale/40">
-        <div className="mx-auto max-w-3xl px-5 py-16 text-center lg:px-8">
-          <p className="text-xs font-bold uppercase tracking-[.25em] text-muted">Contact Us</p>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">Get in touch</h1>
-          <p className="mt-4 text-base leading-relaxed text-muted">Have feedback, questions, or a tool you&apos;d love to see added? We&apos;d love to hear from you.</p>
+    <main className="min-h-screen bg-white">
+      {/* ── SECTION 1: HERO ───────────────────────────────────────────── */}
+      <section className="border-b border-line bg-pale/40 py-16 lg:py-20">
+        <div className="mx-auto max-w-4xl px-5 text-center lg:px-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3.5 py-1 text-xs font-semibold text-muted shadow-2xs mb-6">
+            <span className="h-1.5 w-1.5 rounded-full bg-ink" />
+            <span>Contact Information</span>
+          </div>
+
+          <h1 className="text-4xl font-extrabold tracking-tight text-ink sm:text-5xl lg:text-6xl">
+            We&apos;re Here to Help.
+          </h1>
+
+          <p className="mx-auto mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-muted">
+            Have a question, need technical assistance or want to share feedback? Contact the
+            ToolModeOn team. We&apos;re happy to hear from you.
+          </p>
         </div>
       </section>
-      <section className="mx-auto max-w-xl px-5 py-14 lg:px-8">
-        <div className="rounded-2xl border border-line bg-white p-7 shadow-xs">
-          {email ? (
-            <>
-              <p className="mb-5 text-xs leading-relaxed text-muted">
-                Your email application will open with a draft. The message is sent only when you choose to send it.
-              </p>
-              <form onSubmit={openEmail} className="grid gap-4">
-                <label className="text-xs font-semibold text-ink">
-                  Your name
-                  <input
-                    required
-                    maxLength={100}
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="mt-1.5 w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-muted/60 focus:border-ink focus:ring-1 focus:ring-ink"
-                    placeholder="Jane Doe"
-                  />
-                </label>
-                <label className="text-xs font-semibold text-ink">
-                  Your email
-                  <input
-                    required
-                    type="email"
-                    maxLength={254}
-                    value={from}
-                    onChange={(e) => setFrom(e.target.value)}
-                    className="mt-1.5 w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-muted/60 focus:border-ink focus:ring-1 focus:ring-ink"
-                    placeholder="jane@example.com"
-                  />
-                </label>
-                <label className="text-xs font-semibold text-ink">
-                  Message
-                  <textarea
-                    required
-                    maxLength={10000}
-                    rows={6}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="mt-1.5 w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink outline-none transition placeholder:text-muted/60 focus:border-ink focus:ring-1 focus:ring-ink resize-y"
-                    placeholder="How can we help?"
-                  />
-                </label>
-                <button className="mt-2 rounded-xl bg-ink py-3 text-xs font-semibold text-white transition hover:bg-neutral-800">
-                  Open email draft
-                </button>
-              </form>
-            </>
-          ) : (
-            <>
-              <p className="text-sm leading-relaxed text-muted">
-                Have a question or request? All 79 tools are free to use without an account. Check our tools directory or feel free to reach out via GitHub.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/tools"
-                  className="rounded-xl bg-ink px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-neutral-800"
-                >
-                  Explore All Tools
-                </Link>
-                <Link
-                  href="/"
-                  className="rounded-xl border border-line bg-white px-4 py-2.5 text-xs font-semibold text-ink transition hover:bg-hover"
-                >
-                  Back to Home
-                </Link>
+
+      {/* ── MAIN CONTENT: CONTACT INFO + FORM ─────────────────────────── */}
+      <section className="py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
+            {/* Left Column: Direct Email & Support Categories */}
+            <div className="lg:col-span-5 flex flex-col justify-between">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-muted">
+                  Official Channels
+                </p>
+                <h2 className="mt-1 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                  Get in touch directly
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  Whether you have an inquiry regarding a specific tool or need privacy assistance,
+                  our team is accessible via our primary email address:
+                </p>
+
+                {/* Official Email Card */}
+                <div className="mt-6 rounded-2xl border border-line bg-pale/50 p-6">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink text-white">
+                      <Mail size={18} />
+                    </span>
+                    <div>
+                      <p className="text-xs font-semibold text-muted">Primary Support Email</p>
+                      <a
+                        href="mailto:toolmodeon@gmail.com"
+                        className="text-base font-bold text-ink hover:underline tracking-tight"
+                      >
+                        toolmodeon@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-xs leading-relaxed text-muted">
+                    We review messages systematically. Inquiries typically receive responses within
+                    24 to 48 business hours.
+                  </p>
+                </div>
+
+                {/* Inquiry Categories List */}
+                <div className="mt-8">
+                  <p className="text-xs font-bold uppercase tracking-wider text-muted mb-4">
+                    Inquiry Categories
+                  </p>
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                    {categories.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <div
+                          key={item.title}
+                          className="flex items-start gap-3 rounded-xl border border-line bg-white p-3.5"
+                        >
+                          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-pale text-ink shrink-0 mt-0.5">
+                            <Icon size={14} />
+                          </span>
+                          <div>
+                            <h3 className="font-semibold text-xs text-ink">{item.title}</h3>
+                            <p className="mt-0.5 text-[11px] text-muted leading-relaxed">
+                              {item.description}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-            </>
-          )}
+            </div>
+
+            {/* Right Column: Interactive Contact Form */}
+            <div className="lg:col-span-7">
+              <ContactForm />
+            </div>
+          </div>
         </div>
       </section>
     </main>

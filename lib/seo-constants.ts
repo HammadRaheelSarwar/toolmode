@@ -5,6 +5,7 @@
 
 export const SITE_NAME = "ToolModeOn";
 export const SITE_DOMAIN = "www.toolmodeon.online";
+export const OFFICIAL_EMAIL = "toolmodeon@gmail.com";
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.toolmodeon.online"
 ).replace(/\/$/, "");

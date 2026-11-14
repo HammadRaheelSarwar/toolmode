@@ -44,6 +44,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      { source: "/privacy", destination: "/privacy-policy", permanent: true },
       { source: "/pricing", destination: "/tools", permanent: true },
       { source: "/register", destination: "/tools", permanent: true },
       { source: "/forgot-password", destination: "/tools", permanent: true },

@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { ContentPage } from "../../components/content-page";
+import { redirect } from "next/navigation";
 import { SITE_URL } from "../../lib/seo-constants";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | ToolModeOn",
-  description: "Information about account data, tool processing, AI requests, storage and optional analytics.",
-  alternates: { canonical: `${SITE_URL}/privacy` },
+  description: "Learn how ToolModeOn handles information, cookies, uploaded files, analytics and advertising.",
+  alternates: { canonical: `${SITE_URL}/privacy-policy` },
+  robots: { index: false, follow: true },
 };
-export default function Privacy(){return <ContentPage eyebrow="Legal" title="Privacy policy" intro="This policy describes how the current ToolModeOn app handles information when the relevant service is configured."><p><strong className="text-ink">Account information.</strong> Supabase Authentication stores sign-in credentials and account identifiers. ToolModeOn stores profile information, favorites, usage events, processing history metadata, project names and support messages for signed-in users. Row Level Security is used to restrict private account records to their owners and authorized team members.</p><p><strong className="text-ink">Files and tools.</strong> PDF and image tools in this build process files in your browser. The app sends activity metadata such as tool name, status, filenames and output size to account history when you are signed in. It does not upload a tool file to account storage unless you explicitly save a supported result to a project. Saved project files are stored in a private Supabase Storage bucket and remain until deleted. This build has no automatic storage expiry or self-service account deletion workflow; account deletion requests require the operator to remove related storage objects as well as database records.</p><p><strong className="text-ink">AI requests.</strong> When an AI tool is configured and used, the text you submit is sent from the server to the AI provider configured by the site operator. The provider's own processing and retention terms apply. Do not submit confidential or sensitive information unless you are comfortable with that provider's handling.</p><p><strong className="text-ink">Subscriptions.</strong> If Paddle checkout is enabled, Paddle processes payment details on its hosted checkout. ToolModeOn stores provider transaction identifiers, subscription state, amount, currency and billing dates for account billing history; it does not store card numbers.</p><p><strong className="text-ink">Cookies and analytics.</strong> Essential session cookies support authentication. Optional Google Analytics and advertising scripts remain off until you opt in using the consent controls. Live ads are also gated on publisher approval and configuration. You may change optional cookie choices from the Cookie Policy page.</p><p><strong className="text-ink">Retention and requests.</strong> Account records are retained in the configured Supabase project while needed to provide account features. To request access, correction or deletion, contact the site operator through the authenticated support form. Hosting, authentication, AI, payment and analytics vendors process information under their own service terms.</p><p>This policy must be reviewed against the actual hosting region, vendor agreements and applicable law before launch. Contact information and legally required disclosures should be configured by the site operator.</p></ContentPage>}
+
+export default function PrivacyRedirect() {
+  redirect("/privacy-policy");
+}
