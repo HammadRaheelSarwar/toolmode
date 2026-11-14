@@ -1,0 +1,48 @@
+{
+  "name": "toolmodeon",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "dev:webpack": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@cantoo/pdf-lib": "2.11.1",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.0",
+    "@types/diff": "^7.0.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/jsbarcode": "^3.11.4",
+    "@types/qrcode": "^1.5.6",
+    "cronstrue": "^3.39.0",
+    "diff": "^9.0.0",
+    "js-yaml": "^5.5.0",
+    "jsbarcode": "^3.12.3",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.468.0",
+    "next": "15.5.29",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "6.5.438",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sql-formatter": "^15.9.0",
+    "terser": "^5.51.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.2"
+  },
+  "overrides": {
+    "postcss": "$postcss"
+  }
+}

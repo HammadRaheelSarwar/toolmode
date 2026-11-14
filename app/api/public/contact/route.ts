@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server";
+import { getSupabaseAdminClient } from "../../../../lib/supabase/admin";
+export async function GET(){let email=process.env.SUPPORT_EMAIL||"";const admin=getSupabaseAdminClient();if(!email&&admin){const {data}=await admin.from("system_settings").select("value").eq("setting_key","contact.email").maybeSingle();if(typeof data?.value==="string")email=data.value;else if(data?.value&&typeof data.value==="object"&&"email" in data.value&&typeof data.value.email==="string")email=data.value.email;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))email="";return NextResponse.json({email:email||null},{headers:{"Cache-Control":"public, max-age=300"}});}

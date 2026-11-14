@@ -1,0 +1,107 @@
+import {
+  FileText, Image as ImageIcon, Calculator, Type, Sparkles, Combine, Minimize2, Split, ScanLine, Droplet, Hash, LockKeyhole, Unlock,
+  FileImage, Shrink, Scaling, FileType2, Crop, CalendarDays, Percent, HeartPulse, House,
+  TextCursorInput, CaseSensitive, ListX, GitCompare, WandSparkles, Mail, Lightbulb, SearchCheck,
+  Eraser, Blend, ZoomIn, RotateCcw, Stamp, Wand2,
+  QrCode, ScanBarcode, Coins, CloudSun, Clock, CalendarHeart, Network, Globe, Sunrise,
+  Code2, Braces, FileCode, Database, Binary, CalendarClock, History, Eye, ArrowLeftRight,
+  Share2, Twitter, FileJson, Link2, Languages, Activity, Route, Link, Sliders, Layers, Unlink, FileSearch,
+  type LucideIcon
+} from "lucide-react";
+
+export type ToolCategory = "PDF" | "Image" | "Calculators" | "Text" | "AI" | "Utilities" | "Developer" | "SEO";
+export type Tool = {
+  slug: string; name: string; description: string; category: ToolCategory; icon: LucideIcon; pro?: boolean; color: string;
+};
+
+export const categories = [
+  { name: "PDF Tools", slug: "pdf", description: "Edit, protect and convert PDF documents in seconds.", icon: FileText, color: "#7651E8", count: 10 },
+  { name: "Image Tools", slug: "image", description: "Resize, compress and transform your images.", icon: ImageIcon, color: "#3984F6", count: 8 },
+  { name: "Calculator Tools", slug: "calculators", description: "Clear answers for everyday decisions.", icon: Calculator, color: "#16A36A", count: 5 },
+  { name: "Text Tools", slug: "text", description: "Write, clean up and compare text effortlessly.", icon: Type, color: "#E58A2C", count: 5 },
+  { name: "AI Tools", slug: "ai", description: "A smarter starting point for better work.", icon: Sparkles, color: "#D4478D", count: 5 },
+  { name: "Utility Tools", slug: "utilities", description: "QR, barcodes, currency, weather, time and global lookups.", icon: QrCode, color: "#0EA5E9", count: 9 },
+  { name: "Developer Tools", slug: "developer", description: "Format, minify, test, convert, and inspect code and data.", icon: Code2, color: "#10B981", count: 14 },
+  { name: "SEO Tools", slug: "seo", description: "Audit meta tags, preview social cards, inspect redirects, and optimize search visibility.", icon: SearchCheck, color: "#8B5CF6", count: 15 }
+] as const;
+
+export const tools: Tool[] = [
+  { slug: "pdf-merger", name: "PDF Merger", description: "Combine multiple PDFs into one polished document.", category: "PDF", icon: Combine, color: "#7651E8" },
+  { slug: "pdf-compressor", name: "PDF Compressor", description: "Reduce PDF size while keeping it crisp and readable.", category: "PDF", icon: Minimize2, color: "#7651E8" },
+  { slug: "pdf-splitter", name: "PDF Splitter", description: "Extract pages or split a PDF into separate files.", category: "PDF", icon: Split, color: "#7651E8" },
+  { slug: "pdf-to-image", name: "PDF to Image", description: "Turn PDF pages into high-quality PNG or JPG images.", category: "PDF", icon: ScanLine, color: "#7651E8" },
+  { slug: "image-to-pdf", name: "Image to PDF", description: "Create a clean PDF from your images.", category: "PDF", icon: FileImage, color: "#7651E8" },
+  { slug: "pdf-watermark", name: "PDF Watermark", description: "Add a text or image watermark to selected pages in a PDF.", category: "PDF", icon: Droplet, color: "#7651E8" },
+  { slug: "pdf-page-numbering", name: "PDF Page Numbering", description: "Add customizable page numbers to your PDF documents.", category: "PDF", icon: Hash, color: "#7651E8" },
+  { slug: "protect-pdf", name: "Protect PDF", description: "Encrypt a PDF with an open password and permissions.", category: "PDF", icon: LockKeyhole, color: "#7651E8" },
+  { slug: "unlock-pdf", name: "Unlock PDF", description: "Remove PDF password protection using credentials you know.", category: "PDF", icon: Unlock, color: "#7651E8" },
+  { slug: "pdf-to-text", name: "PDF to Text", description: "Extract selectable text from PDF pages as a UTF-8 text file.", category: "PDF", icon: FileText, color: "#7651E8" },
+  { slug: "image-compressor", name: "Image Compressor", description: "Make images lighter without losing the details that matter.", category: "Image", icon: Shrink, color: "#3984F6" },
+  { slug: "image-resizer", name: "Image Resizer", description: "Resize images to the exact dimensions you need.", category: "Image", icon: Scaling, color: "#3984F6" },
+  { slug: "jpg-to-png", name: "JPG to PNG", description: "Convert JPG photos into transparent-ready PNGs.", category: "Image", icon: FileType2, color: "#3984F6" },
+  { slug: "png-to-webp", name: "PNG to WebP", description: "Convert PNGs into smaller, web-ready WebP files.", category: "Image", icon: FileType2, color: "#3984F6" },
+  { slug: "image-cropper", name: "Image Cropper", description: "Crop to custom sizes or social-ready aspect ratios.", category: "Image", icon: Crop, color: "#3984F6" },
+  // Temporarily hidden from site until Image AI keys are added (code and API routes remain intact):
+  // { slug: "background-remover", name: "Background Remover", description: "Remove image backgrounds instantly with AI-powered segmentation.", category: "Image", icon: Eraser, color: "#3984F6" },
+  // { slug: "background-blur", name: "Background Blur", description: "Blur the background while keeping your subject sharp with AI detection.", category: "Image", icon: Blend, color: "#3984F6" },
+  // { slug: "image-upscaler", name: "Image Upscaler", description: "Upscale images up to 4x with AI super-resolution enhancement.", category: "Image", icon: ZoomIn, color: "#3984F6" },
+  { slug: "image-rotator-flipper", name: "Image Rotator & Flipper", description: "Rotate and flip images precisely with real pixel transformations.", category: "Image", icon: RotateCcw, color: "#3984F6" },
+  { slug: "image-watermark", name: "Image Watermark", description: "Add custom text or logo watermarks to your images.", category: "Image", icon: Stamp, color: "#3984F6" },
+  { slug: "image-enhancer", name: "Image Enhancer", description: "Enhance brightness, contrast, sharpness, saturation and more.", category: "Image", icon: Wand2, color: "#3984F6" },
+  { slug: "age-calculator", name: "Age Calculator", description: "Find your exact age and next birthday.", category: "Calculators", icon: CalendarDays, color: "#16A36A" },
+  { slug: "percentage-calculator", name: "Percentage Calculator", description: "Solve percentages, increases, decreases and differences.", category: "Calculators", icon: Percent, color: "#16A36A" },
+  { slug: "bmi-calculator", name: "BMI Calculator", description: "Check your body mass index as a screening measure.", category: "Calculators", icon: HeartPulse, color: "#16A36A" },
+  { slug: "loan-calculator", name: "Loan Calculator", description: "Estimate monthly payments and total interest.", category: "Calculators", icon: Calculator, color: "#16A36A" },
+  { slug: "mortgage-calculator", name: "Mortgage Calculator", description: "Model a home loan with a clear payment breakdown.", category: "Calculators", icon: House, color: "#16A36A" },
+  { slug: "word-counter", name: "Word Counter", description: "Count words, characters, sentences and reading time.", category: "Text", icon: TextCursorInput, color: "#E58A2C" },
+  { slug: "character-counter", name: "Character Counter", description: "Track characters, words and lines as you type.", category: "Text", icon: Type, color: "#E58A2C" },
+  { slug: "case-converter", name: "Case Converter", description: "Switch between uppercase, lowercase, title and sentence case.", category: "Text", icon: CaseSensitive, color: "#E58A2C" },
+  { slug: "remove-duplicate-lines", name: "Remove Duplicate Lines", description: "Clean repeated lines while preserving first occurrences.", category: "Text", icon: ListX, color: "#E58A2C" },
+  { slug: "text-diff-checker", name: "Text Diff Checker", description: "Compare two pieces of text and spot changes instantly.", category: "Text", icon: GitCompare, color: "#E58A2C" },
+  { slug: "ai-text-summarizer", name: "AI Text Summarizer", description: "Turn long text into a focused, useful summary.", category: "AI", icon: WandSparkles, color: "#D4478D" },
+  { slug: "ai-paragraph-rewriter", name: "AI Paragraph Rewriter", description: "Rewrite paragraphs in a tone that fits your audience.", category: "AI", icon: WandSparkles, color: "#D4478D" },
+  { slug: "ai-email-generator", name: "AI Email Generator", description: "Draft thoughtful, professional emails faster.", category: "AI", icon: Mail, color: "#D4478D" },
+  { slug: "ai-blog-title-generator", name: "AI Blog Title Generator", description: "Generate strong, specific title ideas for your next post.", category: "AI", icon: Lightbulb, color: "#D4478D" },
+  { slug: "seo-meta-description-generator", name: "SEO Meta Description Generator", description: "Create concise meta descriptions with your keywords in mind.", category: "AI", icon: SearchCheck, color: "#D4478D" },
+  { slug: "qr-code-generator", name: "QR Code Generator", description: "Generate custom QR codes for URLs, text, WiFi, email, and vCards.", category: "Utilities", icon: QrCode, color: "#0EA5E9" },
+  { slug: "barcode-generator", name: "Barcode Generator", description: "Generate downloadable barcodes in Code 128, Code 39, EAN-13, and UPC-A.", category: "Utilities", icon: ScanBarcode, color: "#0EA5E9" },
+  { slug: "currency-converter", name: "Currency Converter", description: "Convert global currencies with live European Central Bank exchange rates.", category: "Utilities", icon: Coins, color: "#0EA5E9" },
+  { slug: "weather-forecast", name: "Weather Forecast", description: "Get real-time weather and 7-day forecasts for any city worldwide.", category: "Utilities", icon: CloudSun, color: "#0EA5E9" },
+  { slug: "world-clock-converter", name: "World Clock Converter", description: "Compare local times and time differences across global cities.", category: "Utilities", icon: Clock, color: "#0EA5E9" },
+  { slug: "public-holiday-finder", name: "Public Holiday Finder", description: "Find official national public holidays by country and year.", category: "Utilities", icon: CalendarHeart, color: "#0EA5E9" },
+  { slug: "ip-address-lookup", name: "IP Address Lookup", description: "Detect your public IP and inspect approximate ISP and network details.", category: "Utilities", icon: Network, color: "#0EA5E9" },
+  { slug: "country-information-finder", name: "Country Information Finder", description: "Explore capitals, flags, population, currencies, and languages for 250 countries.", category: "Utilities", icon: Globe, color: "#0EA5E9" },
+  { slug: "sunrise-sunset-calculator", name: "Sunrise & Sunset Calculator", description: "Calculate accurate sunrise, sunset, dawn, dusk, and daylight duration.", category: "Utilities", icon: Sunrise, color: "#0EA5E9" },
+  { slug: "json-formatter", name: "JSON Formatter & Validator", description: "Format, beautify, and validate JSON with line and column error indicators.", category: "Developer", icon: Braces, color: "#10B981" },
+  { slug: "json-minifier", name: "JSON Minifier", description: "Compress and minify JSON by stripping unnecessary whitespace and comments.", category: "Developer", icon: Minimize2, color: "#10B981" },
+  { slug: "javascript-minifier", name: "JavaScript Minifier", description: "Minify JavaScript code using AST parser optimization and dead-code removal.", category: "Developer", icon: FileCode, color: "#10B981" },
+  { slug: "css-minifier", name: "CSS Minifier", description: "Minify CSS stylesheets by stripping comments, spaces, and redundant units.", category: "Developer", icon: FileCode, color: "#10B981" },
+  { slug: "html-minifier", name: "HTML Minifier", description: "Minify HTML documents and templates while preserving pre and code blocks.", category: "Developer", icon: Code2, color: "#10B981" },
+  { slug: "sql-formatter", name: "SQL Formatter", description: "Format and indent SQL queries across PostgreSQL, MySQL, SQLite, and T-SQL.", category: "Developer", icon: Database, color: "#10B981" },
+  { slug: "regex-tester", name: "Regex Tester", description: "Test regular expressions in real-time with match highlighting and capture details.", category: "Developer", icon: Binary, color: "#10B981" },
+  { slug: "cron-expression-generator", name: "Cron Expression Generator", description: "Generate, explain, and preview cron schedule expressions and next run times.", category: "Developer", icon: CalendarClock, color: "#10B981" },
+  { slug: "unix-timestamp-converter", name: "Unix Timestamp Converter", description: "Convert Unix timestamps to human-readable dates and dates back to timestamps.", category: "Developer", icon: History, color: "#10B981" },
+  { slug: "html-preview", name: "HTML Previewer", description: "Live preview HTML and CSS code in a secure, sandboxed browser viewport.", category: "Developer", icon: Eye, color: "#10B981" },
+  { slug: "yaml-to-json", name: "YAML to JSON Converter", description: "Convert YAML files and configurations into formatted or minified JSON.", category: "Developer", icon: ArrowLeftRight, color: "#10B981" },
+  { slug: "json-to-yaml", name: "JSON to YAML Converter", description: "Convert JSON data into clean, human-readable YAML configuration format.", category: "Developer", icon: ArrowLeftRight, color: "#10B981" },
+  { slug: "sql-formatter-validator", name: "SQL Formatter & Validator", description: "Format SQL queries and validate clause sequence and delimiter structure.", category: "Developer", icon: Database, color: "#10B981" },
+  { slug: "code-diff-checker", name: "Diff Checker for Code", description: "Compare two code snippets side-by-side or unified with additions and deletions.", category: "Developer", icon: GitCompare, color: "#10B981" },
+  { slug: "meta-tags-analyzer", name: "Meta Tags Analyzer", description: "Analyze page title, description, robots, Open Graph, and Twitter metadata.", category: "SEO", icon: SearchCheck, color: "#8B5CF6" },
+  { slug: "open-graph-preview", name: "Open Graph Preview", description: "Preview how your webpage appears when shared on Facebook, LinkedIn, and social media.", category: "SEO", icon: Share2, color: "#8B5CF6" },
+  { slug: "twitter-card-preview", name: "Twitter/X Card Preview", description: "Simulate and preview summary and large image Twitter/X card cards.", category: "SEO", icon: Twitter, color: "#8B5CF6" },
+  { slug: "schema-markup-generator", name: "Schema Markup Generator", description: "Generate JSON-LD structured data for Organization, Product, Article, FAQ, and more.", category: "SEO", icon: FileJson, color: "#8B5CF6" },
+  { slug: "schema-markup-validator", name: "Schema Markup Validator", description: "Validate JSON-LD syntax and verify Schema.org vocabulary and recommended properties.", category: "SEO", icon: FileCode, color: "#8B5CF6" },
+  { slug: "canonical-url-checker", name: "Canonical URL Checker", description: "Inspect canonical link tags, detect missing or duplicate tags, and verify preferred URLs.", category: "SEO", icon: Link2, color: "#8B5CF6" },
+  { slug: "hreflang-generator", name: "Hreflang Tag Generator", description: "Generate multilingual alternate tags with reciprocal links and x-default fallback.", category: "SEO", icon: Languages, color: "#8B5CF6" },
+  { slug: "http-status-checker", name: "HTTP Status Code Checker", description: "Check HTTP response status, status code descriptions, response time, and headers.", category: "SEO", icon: Activity, color: "#8B5CF6" },
+  { slug: "redirect-checker", name: "Redirect Checker", description: "Trace complete 301, 302, 307, and 308 redirect chains, loop detection, and final URLs.", category: "SEO", icon: Route, color: "#8B5CF6" },
+  { slug: "url-slug-generator", name: "URL Slug Generator", description: "Create clean, SEO-friendly URL slugs with custom separators and accents normalization.", category: "SEO", icon: Link, color: "#8B5CF6" },
+  { slug: "keyword-research-organizer", name: "Keyword Research Organizer", description: "Organize search keywords by intent, volume, and clusters with CSV import/export.", category: "SEO", icon: Sliders, color: "#8B5CF6" },
+  { slug: "serp-snippet-preview", name: "SERP Snippet Preview", description: "Simulate desktop and mobile Google search snippet results with pixel width checks.", category: "SEO", icon: Eye, color: "#8B5CF6" },
+  { slug: "utm-link-builder", name: "UTM Link Builder", description: "Build campaign tracking URLs with source, medium, campaign tags, and QR code generation.", category: "SEO", icon: Layers, color: "#8B5CF6" },
+  { slug: "broken-link-checker", name: "Broken Link Checker", description: "Crawl webpage links or batch test URLs to identify 404s, timeouts, and broken links.", category: "SEO", icon: Unlink, color: "#8B5CF6" },
+  { slug: "website-word-counter", name: "Website Word Counter", description: "Count words, characters, sentences, paragraphs, and headings from live web pages.", category: "SEO", icon: FileSearch, color: "#8B5CF6" }
+];
+
+export const popularTools = tools.filter((tool) => ["pdf-merger", "image-compressor", "age-calculator", "word-counter", "ai-text-summarizer", "pdf-compressor"].includes(tool.slug));
+export function getTool(slug: string) { return tools.find((tool) => tool.slug === slug); }

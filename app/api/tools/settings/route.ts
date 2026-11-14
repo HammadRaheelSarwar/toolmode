@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server";
+import { getSupabaseServerClient } from "../../../../lib/supabase/server";
+export async function GET(){const supabase=await getSupabaseServerClient();if(!supabase)return NextResponse.json({overrides:[]});const {data,error}=await supabase.from("tool_settings").select("tool_slug,enabled,name_override,description_override,category_override,required_plan,max_file_bytes_override,batch_files_override");if(error)return NextResponse.json({overrides:[]});return NextResponse.json({overrides:data||[]},{headers:{"Cache-Control":"public, max-age=60, stale-while-revalidate=300"}});}
