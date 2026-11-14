@@ -44,30 +44,72 @@ export default function Home() {
 
           {/* Quick jump category tags */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-2 text-xs text-muted">
-            <span className="text-neutral-400">Jump to:</span>
-            {[
-              { name: "PDF", href: "/tools/pdf" },
-              { name: "Image", href: "/tools/image" },
-              { name: "Developer", href: "/tools/developer" },
-              { name: "SEO", href: "/tools/seo" },
-              { name: "Social Media", href: "/tools/social" },
-              { name: "Calculators", href: "/tools/calculators" },
-              { name: "Utilities", href: "/tools/utilities" },
-            ].map((chip) => (
+            <span className="text-neutral-400">Browse categories:</span>
+            {categories.map((cat) => (
               <Link
-                key={chip.name}
-                href={chip.href}
-                className="rounded-md border border-line bg-white px-2.5 py-1 text-ink transition hover:border-ink hover:bg-pale"
+                key={cat.slug}
+                href={`/tools/${cat.slug}`}
+                className="rounded-md border border-line bg-white px-2.5 py-1 text-ink transition hover:border-ink hover:bg-pale font-medium"
               >
-                {chip.name}
+                {cat.name.replace(" Tools", "")}
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── POPULAR TOOLS ────────────────────────────────────────────── */}
+      {/* ── TOOL CATEGORIES ────────────────────────────────────────── */}
       <section className="border-b border-line bg-pale py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div className="max-w-xl">
+              <p className="text-xs font-bold uppercase tracking-wider text-muted">Tool Categories</p>
+              <h2 className="mt-1 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                Organized by task
+              </h2>
+              <p className="mt-2 text-sm text-muted">
+                Find exactly what you need across our structured utility categories.
+              </p>
+            </div>
+            <Link
+              href="/tools"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink hover:underline"
+            >
+              Browse all {tools.length} tools <ChevronRight size={14} />
+            </Link>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {categories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <Link
+                  key={category.slug}
+                  href={`/tools/${category.slug}`}
+                  className="group rounded-xl border border-line bg-white p-5 transition-all duration-150 hover:border-ink hover:bg-pale shadow-card"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-pale text-ink group-hover:bg-ink group-hover:text-white transition-colors">
+                      <Icon size={18} strokeWidth={2} />
+                    </span>
+                    <span className="text-xs font-medium text-muted">{category.count} tools</span>
+                  </div>
+                  <h3 className="mt-4 font-semibold text-sm text-ink">{category.name}</h3>
+                  <p className="mt-1 text-xs text-muted leading-relaxed line-clamp-2">
+                    {category.description}
+                  </p>
+                  <div className="mt-3 text-[11px] font-semibold text-ink inline-flex items-center gap-1">
+                    Browse category <ArrowRight size={11} />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── POPULAR TOOLS ────────────────────────────────────────────── */}
+      <section className="border-b border-line bg-white py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
@@ -86,48 +128,6 @@ export default function Home() {
             {popularTools.map((tool) => (
               <ToolCard key={tool.slug} tool={tool} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── TOOL CATEGORIES ────────────────────────────────────────── */}
-      <section className="border-b border-line bg-white py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-5 lg:px-8">
-          <div className="max-w-xl">
-            <p className="text-xs font-bold uppercase tracking-wider text-muted">Tool Categories</p>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-              Organized by task
-            </h2>
-            <p className="mt-2 text-sm text-muted">
-              Find exactly what you need across our structured utility categories.
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <Link
-                  key={category.slug}
-                  href={`/tools/${category.slug}`}
-                  className="group rounded-xl border border-line bg-white p-5 transition-all duration-150 hover:border-ink hover:bg-pale"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-pale text-ink group-hover:bg-ink group-hover:text-white transition-colors">
-                      <Icon size={18} strokeWidth={2} />
-                    </span>
-                    <span className="text-xs font-medium text-muted">{category.count} tools</span>
-                  </div>
-                  <h3 className="mt-4 font-semibold text-sm text-ink">{category.name}</h3>
-                  <p className="mt-1 text-xs text-muted leading-relaxed line-clamp-2">
-                    {category.description}
-                  </p>
-                  <div className="mt-3 text-[11px] font-semibold text-ink inline-flex items-center gap-1">
-                    Browse category <ArrowRight size={11} />
-                  </div>
-                </Link>
-              );
-            })}
           </div>
         </div>
       </section>
