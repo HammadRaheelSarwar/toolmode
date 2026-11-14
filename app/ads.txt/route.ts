@@ -1,2 +1,0 @@
-import { NextResponse } from "next/server";
-export async function GET(){const id=process.env.ADSENSE_PUBLISHER_ID||"";if(process.env.ADSENSE_APPROVED!=="true"||!/^ca-pub-\d+$/.test(id))return new NextResponse("Not found",{status:404});const publisher=id.replace(/^ca-/,"");return new NextResponse(`google.com, ${publisher}, DIRECT, f08c47fec0942fa0\n`,{headers:{"Content-Type":"text/plain; charset=utf-8","Cache-Control":"public, max-age=3600"}});}
