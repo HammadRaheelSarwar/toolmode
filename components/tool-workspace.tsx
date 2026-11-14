@@ -28,6 +28,11 @@ const SeoToolWorkspace = dynamic(
   { loading: () => <div className="mt-4 h-64 animate-pulse rounded-3xl border border-line bg-pale" aria-hidden="true" /> }
 );
 
+const SocialToolWorkspace = dynamic(
+  () => import("./social-tools").then((module) => module.SocialToolWorkspace),
+  { loading: () => <div className="mt-4 h-64 animate-pulse rounded-3xl border border-line bg-pale" aria-hidden="true" /> }
+);
+
 const inputClass = "w-full rounded-xl border border-line bg-white px-3.5 py-3 text-sm text-ink outline-none transition placeholder:text-muted/60 focus:border-ink focus:ring-1 focus:ring-ink";
 type Status = "idle" | "checking" | "processing" | "success" | "error";
 type ToolAccess = {
@@ -830,6 +835,10 @@ export function ToolWorkspace({ tool }: { tool: Pick<Tool, "slug" | "name" | "de
 
   if (tool.category === "SEO") {
     return <SeoToolWorkspace tool={tool} />;
+  }
+
+  if (tool.category === "Social") {
+    return <SocialToolWorkspace tool={tool} />;
   }
 
   return <div className="grid gap-6 lg:grid-cols-[1fr_320px]">

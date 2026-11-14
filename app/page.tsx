@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight, Zap, ShieldCheck, Clock, Check, Layers, Cpu, Globe, Search, Terminal } from "lucide-react";
-import { categories, popularTools } from "../lib/tools";
+import { categories, popularTools, tools } from "../lib/tools";
 import { ToolCard } from "../components/tool-card";
 import { HeroSearch } from "../components/hero-search";
 
@@ -50,6 +50,7 @@ export default function Home() {
               { name: "Image", href: "/tools/image" },
               { name: "Developer", href: "/tools/developer" },
               { name: "SEO", href: "/tools/seo" },
+              { name: "Social Media", href: "/tools/social" },
               { name: "Calculators", href: "/tools/calculators" },
               { name: "Utilities", href: "/tools/utilities" },
             ].map((chip) => (
@@ -77,7 +78,7 @@ export default function Home() {
               href="/tools"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink hover:underline"
             >
-              View all 79 tools <ChevronRight size={14} />
+              View all {tools.length} tools <ChevronRight size={14} />
             </Link>
           </div>
 

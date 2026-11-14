@@ -23,6 +23,7 @@ export function SiteHeader() {
     ["Image tools", "/tools/image"],
     ["Developer", "/tools/developer"],
     ["SEO tools", "/tools/seo"],
+    ["Social", "/tools/social"],
     ["Calculators", "/tools/calculators"],
     ["Text tools", "/tools/text"],
     ["Utilities", "/tools/utilities"],
@@ -39,9 +40,6 @@ export function SiteHeader() {
             className="h-8 md:h-9 w-auto object-contain"
           />
           <span className="text-[17px] font-bold tracking-tight text-ink">{brandName}</span>
-          <span className="hidden sm:inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700">
-            100% Free
-          </span>
         </Link>
 
         <nav className="hidden items-center gap-1 xl:gap-2 lg:flex">

@@ -6,10 +6,11 @@ import {
   QrCode, ScanBarcode, Coins, CloudSun, Clock, CalendarHeart, Network, Globe, Sunrise,
   Code2, Braces, FileCode, Database, Binary, CalendarClock, History, Eye, ArrowLeftRight,
   Share2, Twitter, FileJson, Link2, Languages, Activity, Route, Link, Sliders, Layers, Unlink, FileSearch,
+  Youtube, Instagram, Smartphone, Contact, PenTool, Megaphone,
   type LucideIcon
 } from "lucide-react";
 
-export type ToolCategory = "PDF" | "Image" | "Calculators" | "Text" | "AI" | "Utilities" | "Developer" | "SEO";
+export type ToolCategory = "PDF" | "Image" | "Calculators" | "Text" | "AI" | "Utilities" | "Developer" | "SEO" | "Social";
 export type Tool = {
   slug: string; name: string; description: string; category: ToolCategory; icon: LucideIcon; pro?: boolean; color: string;
 };
@@ -22,7 +23,8 @@ export const categories = [
   { name: "AI Tools", slug: "ai", description: "A smarter starting point for better work.", icon: Sparkles, color: "#D4478D", count: 5 },
   { name: "Utility Tools", slug: "utilities", description: "QR, barcodes, currency, weather, time and global lookups.", icon: QrCode, color: "#0EA5E9", count: 9 },
   { name: "Developer Tools", slug: "developer", description: "Format, minify, test, convert, and inspect code and data.", icon: Code2, color: "#10B981", count: 14 },
-  { name: "SEO Tools", slug: "seo", description: "Audit meta tags, preview social cards, inspect redirects, and optimize search visibility.", icon: SearchCheck, color: "#8B5CF6", count: 15 }
+  { name: "SEO Tools", slug: "seo", description: "Audit meta tags, preview social cards, inspect redirects, and optimize search visibility.", icon: SearchCheck, color: "#8B5CF6", count: 15 },
+  { name: "Social Media & Marketing", slug: "social", description: "Create, format, optimize, and preview content across YouTube, Instagram, and social platforms.", icon: Share2, color: "#111111", count: 10 }
 ] as const;
 
 export const tools: Tool[] = [
@@ -100,7 +102,17 @@ export const tools: Tool[] = [
   { slug: "serp-snippet-preview", name: "SERP Snippet Preview", description: "Simulate desktop and mobile Google search snippet results with pixel width checks.", category: "SEO", icon: Eye, color: "#8B5CF6" },
   { slug: "utm-link-builder", name: "UTM Link Builder", description: "Build campaign tracking URLs with source, medium, campaign tags, and QR code generation.", category: "SEO", icon: Layers, color: "#8B5CF6" },
   { slug: "broken-link-checker", name: "Broken Link Checker", description: "Crawl webpage links or batch test URLs to identify 404s, timeouts, and broken links.", category: "SEO", icon: Unlink, color: "#8B5CF6" },
-  { slug: "website-word-counter", name: "Website Word Counter", description: "Count words, characters, sentences, paragraphs, and headings from live web pages.", category: "SEO", icon: FileSearch, color: "#8B5CF6" }
+  { slug: "website-word-counter", name: "Website Word Counter", description: "Count words, characters, sentences, paragraphs, and headings from live web pages.", category: "SEO", icon: FileSearch, color: "#8B5CF6" },
+  { slug: "youtube-thumbnail-downloader", name: "YouTube Thumbnail Downloader", description: "Extract and download high-resolution HD, SD, and standard thumbnails from any public YouTube video.", category: "Social", icon: Youtube, color: "#111111" },
+  { slug: "youtube-banner-resizer", name: "YouTube Channel Banner Resizer", description: "Resize, crop, and align images for YouTube channel banners with interactive 2560x1440 and safe-area guides.", category: "Social", icon: Crop, color: "#111111" },
+  { slug: "instagram-bio-formatter", name: "Instagram Bio Formatter", description: "Style your Instagram bio with clean line breaks, Unicode fonts, emoji suggestions, and pre-made templates.", category: "Social", icon: Instagram, color: "#111111" },
+  { slug: "hashtag-generator", name: "Hashtag Generator", description: "Generate relevant, categorized hashtags across niche, industry, business, and community themes from your keywords.", category: "Social", icon: Hash, color: "#111111" },
+  { slug: "social-media-post-preview", name: "Social Media Post Preview", description: "Simulate and preview posts across Instagram, Facebook, LinkedIn, and X in mobile and desktop layouts before publishing.", category: "Social", icon: Smartphone, color: "#111111" },
+  { slug: "utm-campaign-builder", name: "UTM Campaign Builder", description: "Generate campaign tracking URLs with source, medium, campaign parameters, presets, CSV export, and QR codes.", category: "Social", icon: Layers, color: "#111111" },
+  { slug: "email-signature-generator", name: "Email Signature Generator", description: "Build professional, email-safe HTML signatures with custom templates, social links, logos, and one-click rich copy.", category: "Social", icon: PenTool, color: "#111111" },
+  { slug: "qr-business-card-generator", name: "QR Business Card Generator", description: "Generate scannable digital vCard QR codes for business cards with customizable colors, sizes, and instant contact save.", category: "Social", icon: Contact, color: "#111111" },
+  { slug: "youtube-description-formatter", name: "YouTube Description Formatter", description: "Format organized YouTube video descriptions with timestamps, social links, CTAs, disclaimers, and structured templates.", category: "Social", icon: FileText, color: "#111111" },
+  { slug: "social-media-character-counter", name: "Social Media Character Counter", description: "Count characters, words, and lines in real-time with verified platform limits for Instagram, X, Facebook, LinkedIn, and YouTube.", category: "Social", icon: CaseSensitive, color: "#111111" }
 ];
 
 export const popularTools = tools.filter((tool) => ["pdf-merger", "image-compressor", "age-calculator", "word-counter", "ai-text-summarizer", "pdf-compressor"].includes(tool.slug));

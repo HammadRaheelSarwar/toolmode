@@ -55,7 +55,8 @@ export default function ToolsPage() {
         (category === "Developer" && t.category === "Developer") ||
         (category === "SEO" && t.category === "SEO") ||
         (category === "Utility" && t.category === "Utilities") ||
-        (category === "Calculator" && t.category === "Calculators");
+        (category === "Calculator" && t.category === "Calculators") ||
+        ((category === "Social" || category === "Social Media" || category === "Social Media & Marketing") && t.category === "Social");
       if (!matchCat) return false;
       if (!q) return true;
       return (
@@ -70,6 +71,9 @@ export default function ToolsPage() {
     const counts: Record<string, number> = { All: available.length };
     for (const t of available) {
       counts[t.category] = (counts[t.category] || 0) + 1;
+      if (t.category === "Social") {
+        counts["Social Media & Marketing"] = (counts["Social Media & Marketing"] || 0) + 1;
+      }
     }
     return counts;
   }, [available]);
@@ -85,7 +89,7 @@ export default function ToolsPage() {
               All Tools
             </h1>
             <p className="mt-2 text-sm text-muted leading-relaxed">
-              Browse 79 focused utilities across documents, images, development, and everyday calculations.
+              Browse {available.length} focused utilities across documents, images, development, SEO, social media, and everyday calculations.
             </p>
           </div>
 

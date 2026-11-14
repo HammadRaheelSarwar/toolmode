@@ -2054,23 +2054,52 @@ function SerpSnippetPreviewWorkspace() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TOOL #88 — UTM Link Builder
+// TOOL #88 & #96 — UTM Link / Campaign Builder
 // ─────────────────────────────────────────────────────────────────────────────
-function UtmLinkBuilderWorkspace() {
-  const [baseUrl, setBaseUrl] = useState("https://toolmodeon.online/tools/seo");
+export function UtmLinkBuilderWorkspace() {
+  const [baseUrl, setBaseUrl] = useState("https://toolmodeon.online");
   const [source, setSource] = useState("google");
   const [medium, setMedium] = useState("cpc");
   const [campaign, setCampaign] = useState("spring_launch_2026");
-  const [term, setTerm] = useState("seo+tools");
+  const [term, setTerm] = useState("marketing+tools");
   const [content, setContent] = useState("hero_cta_banner");
   const [copied, setCopied] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
+
+  const presets = [
+    { label: "Google Ads", source: "google", medium: "cpc", campaign: "search_ads", term: "keyword", content: "ad_headline_1" },
+    { label: "Facebook Ads", source: "facebook", medium: "paid_social", campaign: "feed_conversion", term: "retargeting", content: "carousel_card_1" },
+    { label: "Instagram", source: "instagram", medium: "social_bio", campaign: "story_swipe_up", term: "influencer", content: "bio_link" },
+    { label: "Email Marketing", source: "newsletter", medium: "email", campaign: "weekly_digest_nov", term: "subscribers", content: "button_main" },
+    { label: "LinkedIn", source: "linkedin", medium: "sponsored_content", campaign: "b2b_leadgen_q4", term: "founders", content: "single_image_ad" },
+    { label: "Affiliate Campaigns", source: "affiliate_partner", medium: "referral", campaign: "holiday_partner_push", term: "partner_id_89", content: "sidebar_banner" },
+  ];
+
+  const applyPreset = (p: typeof presets[0]) => {
+    setSource(p.source);
+    setMedium(p.medium);
+    setCampaign(p.campaign);
+    setTerm(p.term);
+    setContent(p.content);
+  };
+
+  const resetFields = () => {
+    setBaseUrl("https://toolmodeon.online");
+    setSource("");
+    setMedium("");
+    setCampaign("");
+    setTerm("");
+    setContent("");
+  };
 
   const generatedUrl = useMemo(() => {
     let clean = baseUrl.trim();
     if (!clean) return "";
 
     try {
+      if (!clean.startsWith("http://") && !clean.startsWith("https://")) {
+        clean = "https://" + clean;
+      }
       const u = new URL(clean);
       if (source.trim()) u.searchParams.set("utm_source", source.trim());
       if (medium.trim()) u.searchParams.set("utm_medium", medium.trim());
@@ -2093,42 +2122,82 @@ function UtmLinkBuilderWorkspace() {
     });
   }, [generatedUrl]);
 
+  const exportCsv = () => {
+    const headers = ["Base URL", "Source (utm_source)", "Medium (utm_medium)", "Campaign (utm_campaign)", "Term (utm_term)", "Content (utm_content)", "Final URL", "Generated At"];
+    const row = [
+      `"${baseUrl.replace(/"/g, '""')}"`,
+      `"${source.replace(/"/g, '""')}"`,
+      `"${medium.replace(/"/g, '""')}"`,
+      `"${campaign.replace(/"/g, '""')}"`,
+      `"${term.replace(/"/g, '""')}"`,
+      `"${content.replace(/"/g, '""')}"`,
+      `"${generatedUrl.replace(/"/g, '""')}"`,
+      `"${new Date().toISOString()}"`,
+    ];
+    const csvContent = `${headers.join(",")}\n${row.join(",")}\n`;
+    downloadFile(csvContent, `utm-campaign-${campaign || "link"}.csv`, "text/csv;charset=utf-8;");
+  };
+
   return (
     <div className="space-y-6">
+      {/* Quick Presets */}
+      <div className="rounded-2xl border border-line bg-pale/50 p-4">
+        <p className="text-xs font-bold uppercase tracking-wider text-muted">Common Campaign Presets</p>
+        <div className="mt-2.5 flex flex-wrap gap-2">
+          {presets.map((p) => (
+            <button
+              key={p.label}
+              type="button"
+              onClick={() => applyPreset(p)}
+              className="rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-ink transition hover:border-ink hover:bg-pale"
+            >
+              {p.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={resetFields}
+            className="rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-muted transition hover:border-rose-400 hover:text-rose-600"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Editor Form */}
         <div className="rounded-3xl border border-line bg-white p-6 shadow-soft space-y-4">
           <h3 className="text-xs font-extrabold uppercase tracking-wider text-muted">Campaign Tracking Parameters</h3>
 
           <div className="space-y-1">
-            <label className="text-xs font-bold text-muted uppercase">Base Website URL</label>
-            <input value={baseUrl} onChange={(e) => setBaseUrl(e.target.value)} className={inputClass} />
+            <label className="text-xs font-bold text-muted uppercase">Base Website URL*</label>
+            <input value={baseUrl} onChange={(e) => setBaseUrl(e.target.value)} placeholder="https://example.com/landing" className={inputClass} />
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1">
               <label className="text-xs font-bold text-muted uppercase">Campaign Source (`utm_source`)*</label>
-              <input value={source} onChange={(e) => setSource(e.target.value)} placeholder="google, newsletter" className={inputClass} />
+              <input value={source} onChange={(e) => setSource(e.target.value)} placeholder="google, newsletter, facebook" className={inputClass} />
             </div>
             <div className="space-y-1">
               <label className="text-xs font-bold text-muted uppercase">Campaign Medium (`utm_medium`)*</label>
-              <input value={medium} onChange={(e) => setMedium(e.target.value)} placeholder="cpc, email, social" className={inputClass} />
+              <input value={medium} onChange={(e) => setMedium(e.target.value)} placeholder="cpc, email, social, referral" className={inputClass} />
             </div>
           </div>
 
           <div className="space-y-1">
             <label className="text-xs font-bold text-muted uppercase">Campaign Name (`utm_campaign`)*</label>
-            <input value={campaign} onChange={(e) => setCampaign(e.target.value)} placeholder="summer_sale" className={inputClass} />
+            <input value={campaign} onChange={(e) => setCampaign(e.target.value)} placeholder="summer_sale_2026" className={inputClass} />
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1">
               <label className="text-xs font-bold text-muted uppercase">Campaign Term (`utm_term`)</label>
-              <input value={term} onChange={(e) => setTerm(e.target.value)} placeholder="keywords" className={inputClass} />
+              <input value={term} onChange={(e) => setTerm(e.target.value)} placeholder="running+shoes (optional)" className={inputClass} />
             </div>
             <div className="space-y-1">
               <label className="text-xs font-bold text-muted uppercase">Campaign Content (`utm_content`)</label>
-              <input value={content} onChange={(e) => setContent(e.target.value)} placeholder="banner_cta" className={inputClass} />
+              <input value={content} onChange={(e) => setContent(e.target.value)} placeholder="hero_banner, logolink (optional)" className={inputClass} />
             </div>
           </div>
         </div>
@@ -2141,7 +2210,7 @@ function UtmLinkBuilderWorkspace() {
               {generatedUrl || "Enter a valid base URL above"}
             </div>
 
-            <div className="flex justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-2">
               <button
                 type="button"
                 disabled={!generatedUrl}
@@ -2150,6 +2219,16 @@ function UtmLinkBuilderWorkspace() {
               >
                 {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
                 {copied ? "Copied" : "Copy UTM Link"}
+              </button>
+
+              <button
+                type="button"
+                disabled={!generatedUrl}
+                onClick={exportCsv}
+                className="flex items-center gap-1.5 rounded-xl border border-line bg-white px-4 py-2 text-xs font-bold text-ink shadow-sm hover:bg-pale disabled:opacity-50"
+              >
+                <Download size={14} />
+                Export CSV
               </button>
             </div>
 
@@ -2162,7 +2241,7 @@ function UtmLinkBuilderWorkspace() {
                   onClick={() => {
                     const a = document.createElement("a");
                     a.href = qrDataUrl;
-                    a.download = "campaign-qr.png";
+                    a.download = `campaign-qr-${campaign || "link"}.png`;
                     a.click();
                   }}
                   className="mt-2 text-xs font-bold text-brand hover:underline"

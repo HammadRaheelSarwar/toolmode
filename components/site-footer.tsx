@@ -30,9 +30,6 @@ export function SiteFooter() {
                 className="h-8 md:h-9 w-auto object-contain"
               />
               <span className="text-base font-bold text-ink">{brandName}</span>
-              <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-bold text-emerald-700">
-                100% Free
-              </span>
             </Link>
             <p className="mt-3.5 max-w-xs text-xs leading-relaxed text-muted">
               Everyday Tools. One Platform. Minimalist, fast, and privacy-conscious online utilities for everyday work.
@@ -62,6 +59,7 @@ export function SiteFooter() {
               ["Image tools", "/tools/image"],
               ["Developer tools", "/tools/developer"],
               ["SEO tools", "/tools/seo"],
+              ["Social tools", "/tools/social"],
               ["Calculators", "/tools/calculators"],
             ]}
           />
