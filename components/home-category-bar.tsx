@@ -10,22 +10,9 @@ import {
   Layers,
   Sparkles,
 } from "lucide-react";
-import type { Tool } from "../lib/tools";
+import { categories, tools, type Tool } from "../lib/tools";
 
-export function HomeCategoryBar({
-  categories,
-  tools,
-}: {
-  categories: readonly {
-    name: string;
-    slug: string;
-    description: string;
-    icon: any;
-    color: string;
-    count: number;
-  }[];
-  tools: Tool[];
-}) {
+export function HomeCategoryBar() {
   // Ordered categories as requested:
   // PDF Tools, Image Tools, Developer Tools, SEO Tools, Social Media & Marketing, Calculator Tools, Text Tools, AI Tools, Utility Tools
   const orderedCategories = useMemo(() => {

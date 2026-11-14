@@ -46,7 +46,7 @@ export default function Home() {
       </section>
 
       {/* ── HORIZONTAL SCROLLING CATEGORY BAR & CATEGORY-WISE TOOLS ── */}
-      <HomeCategoryBar categories={categories} tools={tools} />
+      <HomeCategoryBar />
 
       {/* ── TOOL CATEGORIES ────────────────────────────────────────── */}
       <section className="border-b border-line bg-pale py-16 lg:py-20">
@@ -147,7 +147,7 @@ export default function Home() {
               },
               {
                 title: "Useful Everyday Tools",
-                desc: "79 focused utilities across PDF manipulation, image conversion, code minification, SEO inspection, and calculations.",
+                desc: "Over 80 focused utilities across PDF manipulation, image conversion, code minification, SEO inspection, social media, and calculations.",
               },
               {
                 title: "Convenient Platform",
