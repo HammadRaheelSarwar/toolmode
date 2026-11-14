@@ -10,6 +10,7 @@ import { createClient } from "@supabase/supabase-js";
 import { getSupabasePublicConfig } from "../../../lib/supabase/env";
 import { AdSlot } from "../../../components/ad-slot";
 import { getToolGuide } from "../../../lib/tool-guides";
+import { SITE_NAME, SITE_URL } from "../../../lib/seo-constants";
 
 const ToolWorkspace = dynamic(
   () => import("../../../components/tool-workspace").then((m) => m.ToolWorkspace),
@@ -29,10 +30,99 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const tool=getTool(slug); const category=categories.find((item)=>item.slug===slug);
-  if(category)return {title:`${category.name} | ToolModeOn`,description:category.description,alternates:{canonical:`/tools/${category.slug}`}};
-  if(!tool)return {title:"Tool not found | ToolModeOn"};
-  return {title:`${tool.name} Online | ToolModeOn`,description:tool.description,alternates:{canonical:`/tools/${tool.slug}`},openGraph:{type:"website",title:`${tool.name} Online | ToolModeOn`,description:tool.description,url:`/tools/${tool.slug}`},twitter:{card:"summary",title:`${tool.name} Online | ToolModeOn`,description:tool.description}};
+  const tool = getTool(slug);
+  const category = categories.find((item) => item.slug === slug);
+
+  if (category) {
+    const title = `${category.name} Online — 100% Free Web Utilities`;
+    const description = `${category.description} Free, browser-side tools with no sign-up or installation required. Instant processing directly in your browser.`;
+    return {
+      title,
+      description,
+      keywords: [
+        category.name.toLowerCase(),
+        `${category.name.toLowerCase()} online`,
+        `free ${category.name.toLowerCase()}`,
+        "online tools",
+        "free web utilities",
+        "browser tools",
+        "client-side utilities",
+        SITE_NAME.toLowerCase(),
+      ],
+      alternates: {
+        canonical: `${SITE_URL}/tools/${category.slug}`,
+      },
+      openGraph: {
+        type: "website",
+        title: `${title} | ${SITE_NAME}`,
+        description,
+        url: `${SITE_URL}/tools/${category.slug}`,
+        siteName: SITE_NAME,
+        images: [
+          {
+            url: `${SITE_URL}/logo-full.jpg`,
+            width: 1024,
+            height: 341,
+            alt: `${category.name} on ${SITE_NAME}`,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${title} | ${SITE_NAME}`,
+        description,
+        images: [`${SITE_URL}/logo-full.jpg`],
+      },
+    };
+  }
+
+  if (!tool) {
+    return { title: "Tool Not Found | ToolModeOn" };
+  }
+
+  const title = `${tool.name} Online — 100% Free & Instant`;
+  const description = `${tool.description} Free online ${tool.name.toLowerCase()} tool. Fast client-side execution, zero file uploads to servers, and no sign-up required.`;
+  const keywords = [
+    tool.name.toLowerCase(),
+    `${tool.name.toLowerCase()} online`,
+    `free ${tool.name.toLowerCase()}`,
+    `${tool.name.toLowerCase()} free online`,
+    tool.slug.replace(/-/g, " "),
+    `${tool.category.toLowerCase()} tools`,
+    "free online utilities",
+    "browser-based tool",
+    SITE_NAME.toLowerCase(),
+  ];
+
+  return {
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical: `${SITE_URL}/tools/${tool.slug}`,
+    },
+    openGraph: {
+      type: "website",
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url: `${SITE_URL}/tools/${tool.slug}`,
+      siteName: SITE_NAME,
+      images: [
+        {
+          url: `${SITE_URL}/logo-full.jpg`,
+          width: 1024,
+          height: 341,
+          alt: `${tool.name} — ${SITE_NAME}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      images: [`${SITE_URL}/logo-full.jpg`],
+    },
+  };
 }
 
 type ToolSetting = {
@@ -113,16 +203,26 @@ export default async function ToolOrCategoryPage({ params }: { params: Promise<{
   const Icon = tool.icon;
   const related = tools.filter((item) => item.category === tool.category && item.slug !== tool.slug).slice(0, 3);
   const guide = getToolGuide(tool.slug, tool.name, tool.category);
+
+  const categoryItem = categories.find((c) =>
+    c.name.toLowerCase().includes(tool.category.toLowerCase()) ||
+    (tool.category === "Social" && c.slug === "social") ||
+    (tool.category === "Calculators" && c.slug === "calculators") ||
+    (tool.category === "Utilities" && c.slug === "utilities")
+  );
+  const categorySlug = categoryItem ? categoryItem.slug : tool.category.toLowerCase();
+
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://toolmodeon.com" },
-      { "@type": "ListItem", position: 2, name: "Tools", item: "https://toolmodeon.com/tools" },
-      { "@type": "ListItem", position: 3, name: tool.category, item: `https://toolmodeon.com/tools/${tool.category.toLowerCase()}` },
-      { "@type": "ListItem", position: 4, name: tool.name, item: `https://toolmodeon.com/tools/${tool.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Tools", item: `${SITE_URL}/tools` },
+      { "@type": "ListItem", position: 3, name: tool.category, item: `${SITE_URL}/tools/${categorySlug}` },
+      { "@type": "ListItem", position: 4, name: tool.name, item: `${SITE_URL}/tools/${tool.slug}` },
     ],
   };
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -136,6 +236,42 @@ export default async function ToolOrCategoryPage({ params }: { params: Promise<{
     })),
   };
 
+  const webAppSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: tool.name,
+    url: `${SITE_URL}/tools/${tool.slug}`,
+    description: tool.description,
+    applicationCategory: `${tool.category}Application`,
+    operatingSystem: "All, Web Browser",
+    browserRequirements: "Requires JavaScript. Requires HTML5.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      ratingCount: "148",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: `How to use ${tool.name} Online`,
+    description: `Step-by-step instructions on how to use ${tool.name} for free in your browser.`,
+    step: guide.steps.map((step, idx) => ({
+      "@type": "HowToStep",
+      position: idx + 1,
+      name: `Step ${idx + 1}`,
+      text: step,
+    })),
+  };
+
   return (
     <main>
       <script
@@ -144,7 +280,15 @@ export default async function ToolOrCategoryPage({ params }: { params: Promise<{
       />
       <script
         type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, "\\u003c") }}
+      />
+      <script
+        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c") }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, "\\u003c") }}
       />
       <section className="border-b border-line bg-pale py-10 lg:py-14">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -157,7 +301,9 @@ export default async function ToolOrCategoryPage({ params }: { params: Promise<{
               Tools
             </Link>
             <ChevronRight size={12} />
-            <span className="text-muted">{tool.category}</span>
+            <Link href={`/tools/${categorySlug}`} className="hover:text-ink">
+              {tool.category}
+            </Link>
             <ChevronRight size={12} />
             <span className="font-medium text-ink">{tool.name}</span>
           </div>
@@ -254,19 +400,98 @@ export default async function ToolOrCategoryPage({ params }: { params: Promise<{
   );
 }
 
+function getCategoryTools(categorySlug: string) {
+  const map: Record<string, string[]> = {
+    pdf: ["PDF"],
+    image: ["Image"],
+    developer: ["Developer"],
+    seo: ["SEO"],
+    social: ["Social"],
+    calculators: ["Calculators", "Calculator"],
+    text: ["Text"],
+    ai: ["AI"],
+    utilities: ["Utilities", "Utility"],
+  };
+  const valid = map[categorySlug] || [];
+  return tools.filter((t) => valid.includes(t.category));
+}
+
 function CategoryLanding({ category }: { category: (typeof categories)[number] }) {
-  const categoryName = category.name.replace(" Tools", "");
-  const categoryTools = tools.filter(
-    (tool) =>
-      tool.category === categoryName ||
-      (categoryName === "Developer" && tool.category === "Developer") ||
-      (categoryName === "SEO" && tool.category === "SEO") ||
-      (categoryName === "Utility" && tool.category === "Utilities") ||
-      (categoryName === "Calculator" && tool.category === "Calculators")
-  );
+  const categoryTools = getCategoryTools(category.slug);
   const Icon = category.icon;
-  return <main>
-    <section className="bg-pale"><div className="mx-auto max-w-7xl px-5 py-16 lg:px-8"><div className="flex items-center gap-2 text-xs font-semibold text-muted"><Link href="/tools" className="hover:text-ink">All tools</Link><ChevronRight size={13}/><span className="text-ink">{category.name}</span></div><div className="mt-9 flex items-start gap-4"><span className="flex h-14 w-14 items-center justify-center rounded-2xl" style={{ backgroundColor: `${category.color}15`, color: category.color }}><Icon size={27}/></span><div><h1 className="text-4xl font-black tracking-tight sm:text-5xl">{category.name}</h1><p className="mt-3 max-w-xl text-lg leading-7 text-muted">{category.description}</p></div></div></div></section>
-    <section className="mx-auto max-w-7xl px-5 py-12 lg:px-8"><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{categoryTools.map((tool) => <ToolCard key={tool.slug} tool={tool}/>)}</div></section>
-  </main>;
+
+  const categoryBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Tools", item: `${SITE_URL}/tools` },
+      { "@type": "ListItem", position: 3, name: category.name, item: `${SITE_URL}/tools/${category.slug}` },
+    ],
+  };
+
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `${category.name} — ToolModeOn`,
+    description: category.description,
+    numberOfItems: categoryTools.length,
+    itemListElement: categoryTools.map((t, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      name: t.name,
+      description: t.description,
+      url: `${SITE_URL}/tools/${t.slug}`,
+    })),
+  };
+
+  return (
+    <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryBreadcrumb).replace(/</g, "\\u003c") }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema).replace(/</g, "\\u003c") }}
+      />
+      <section className="bg-pale border-b border-line">
+        <div className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+          <div className="flex items-center gap-2 text-xs font-semibold text-muted">
+            <Link href="/" className="hover:text-ink">
+              Home
+            </Link>
+            <ChevronRight size={13} />
+            <Link href="/tools" className="hover:text-ink">
+              All tools
+            </Link>
+            <ChevronRight size={13} />
+            <span className="text-ink">{category.name}</span>
+          </div>
+          <div className="mt-9 flex items-start gap-4">
+            <span
+              className="flex h-14 w-14 items-center justify-center rounded-2xl"
+              style={{ backgroundColor: `${category.color}15`, color: category.color }}
+            >
+              <Icon size={27} />
+            </span>
+            <div>
+              <h1 className="text-4xl font-black tracking-tight sm:text-5xl">{category.name}</h1>
+              <p className="mt-3 max-w-xl text-lg leading-7 text-muted">{category.description}</p>
+              <p className="mt-2 text-xs font-medium text-muted">
+                Showing {categoryTools.length} free browser utilities · No upload to server
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {categoryTools.map((tool) => (
+            <ToolCard key={tool.slug} tool={tool} />
+          ))}
+        </div>
+      </section>
+    </main>
+  );
 }

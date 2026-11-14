@@ -38,4 +38,6 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
   return starterArticles;
 }
 
-export function articleUrl(slug: string) { return `https://toolmodeon.com/blog/${slug}`; }
+import { SITE_URL } from "./seo-constants";
+
+export function articleUrl(slug: string) { return `${SITE_URL}/blog/${slug}`; }

@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Search } from "lucide-react";
 import { getBlogArticles } from "../../lib/blog-content";
+import { SITE_URL } from "../../lib/seo-constants";
 
-export const metadata: Metadata = { title: "Guides and Articles | ToolModeOn Blog", description: "Practical guides for PDFs, images, calculators, text, AI and everyday digital work.", alternates: { canonical: "/blog" } };
+export const metadata: Metadata = {
+  title: "Guides and Articles | ToolModeOn Blog",
+  description: "Practical guides for PDFs, images, calculators, text, AI and everyday digital work.",
+  alternates: { canonical: `${SITE_URL}/blog` },
+};
 
 export default async function Blog() {
   const posts = await getBlogArticles();

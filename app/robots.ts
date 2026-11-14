@@ -1,10 +1,26 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "../lib/seo-constants";
 
 export default function robots(): MetadataRoute.Robots {
-  const base = (process.env.NEXT_PUBLIC_SITE_URL || "https://toolmodeon.com").replace(/\/$/, "");
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: ["/admin", "/api/"] }],
-    sitemap: `${base}/sitemap.xml`,
-    host: base,
+    rules: [
+      {
+        userAgent: "*",
+        allow: ["/", "/tools", "/tools/*", "/blog", "/blog/*", "/about"],
+        disallow: ["/admin", "/admin/*", "/api/", "/dashboard", "/account-suspended"],
+      },
+      {
+        userAgent: "Googlebot",
+        allow: ["/", "/tools", "/tools/*"],
+        disallow: ["/admin/", "/api/"],
+      },
+      {
+        userAgent: "Bingbot",
+        allow: ["/", "/tools", "/tools/*"],
+        disallow: ["/admin/", "/api/"],
+      },
+    ],
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

@@ -3,31 +3,94 @@ import "./globals.css";
 import { SiteHeader } from "../components/site-header";
 import { SiteFooter } from "../components/site-footer";
 import { CookieConsent } from "../components/cookie-consent";
+import {
+  SITE_NAME,
+  SITE_URL,
+  DEFAULT_META_TITLE,
+  DEFAULT_META_DESCRIPTION,
+  DEFAULT_KEYWORDS,
+} from "../lib/seo-constants";
 
 export const metadata: Metadata = {
-  title: "ToolModeOn — Everyday Tools. One Platform.",
-  description: "Fast, private online tools for PDFs, images, calculations, text and AI.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://toolmodeon.online"),
-  alternates: { canonical: "/" },
+  title: {
+    default: DEFAULT_META_TITLE,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: DEFAULT_META_DESCRIPTION,
+  keywords: DEFAULT_KEYWORDS,
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+  },
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
   openGraph: {
     type: "website",
-    siteName: "ToolModeOn",
-    title: "ToolModeOn — Everyday Tools. One Platform.",
-    description: "Fast online tools for PDFs, images, calculations, text and AI.",
-    url: "/",
-    images: [{ url: "/logo-full.jpg", width: 1024, height: 341, alt: "ToolModeOn — Everyday Tools. One Platform." }],
+    locale: "en_US",
+    siteName: SITE_NAME,
+    title: DEFAULT_META_TITLE,
+    description: DEFAULT_META_DESCRIPTION,
+    url: SITE_URL,
+    images: [
+      {
+        url: "/logo-full.jpg",
+        width: 1024,
+        height: 341,
+        alt: `${SITE_NAME} — Everyday Tools. One Platform.`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ToolModeOn — Everyday Tools. One Platform.",
-    description: "Fast online tools for everyday work.",
+    title: DEFAULT_META_TITLE,
+    description: DEFAULT_META_DESCRIPTION,
     images: ["/logo-full.jpg"],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: DEFAULT_META_DESCRIPTION,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/tools?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/icon.png`,
+  sameAs: [
+    "https://twitter.com/toolmodeon",
+    "https://github.com/toolmodeon",
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -64,6 +127,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }
 })();`,
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c") }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
         />
       </head>
       <body suppressHydrationWarning>
