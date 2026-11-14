@@ -3,12 +3,13 @@ import { ArrowRight, ChevronRight, Zap, ShieldCheck, Clock, Check, Layers, Cpu, 
 import { categories, popularTools, tools } from "../lib/tools";
 import { ToolCard } from "../components/tool-card";
 import { HeroSearch } from "../components/hero-search";
+import { HomeCategoryBar } from "../components/home-category-bar";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       {/* ── HERO SECTION ──────────────────────────────────────────────── */}
-      <section className="relative border-b border-line bg-white py-20 lg:py-28">
+      <section className="relative border-b border-line bg-white py-20 lg:py-24">
         <div className="mx-auto max-w-4xl px-5 text-center lg:px-8">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-line bg-pale px-3 py-1 text-xs font-medium text-muted mb-6">
             <span>Everyday Tools. One Platform.</span>
@@ -41,22 +42,11 @@ export default function Home() {
               About ToolModeOn
             </Link>
           </div>
-
-          {/* Quick jump category tags */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2 text-xs text-muted">
-            <span className="text-neutral-400">Browse categories:</span>
-            {categories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/tools/${cat.slug}`}
-                className="rounded-md border border-line bg-white px-2.5 py-1 text-ink transition hover:border-ink hover:bg-pale font-medium"
-              >
-                {cat.name.replace(" Tools", "")}
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
+
+      {/* ── HORIZONTAL SCROLLING CATEGORY BAR & CATEGORY-WISE TOOLS ── */}
+      <HomeCategoryBar categories={categories} tools={tools} />
 
       {/* ── TOOL CATEGORIES ────────────────────────────────────────── */}
       <section className="border-b border-line bg-pale py-16 lg:py-20">

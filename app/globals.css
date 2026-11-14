@@ -85,6 +85,15 @@ button {
   perspective: 1000px;
 }
 
+/* Clean horizontal scroll without scrollbar thumb */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .mobile-scroll {
     overflow-x: auto;
