@@ -87,8 +87,12 @@ export function HeroPreviewMockup() {
         {/* Top Window Bar */}
         <div className="flex items-center justify-between border-b border-neutral-100 pb-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="flex h-5 w-5 items-center justify-center rounded-md bg-neutral-950 text-white">
-              <Zap size={11} className="fill-white" />
+            <span className="flex h-5 w-5 items-center justify-center rounded-md bg-neutral-950 p-0.5 shadow-xs">
+              <img
+                src="/logo.png"
+                alt="ToolModeOn Logo"
+                className="h-full w-full object-contain"
+              />
             </span>
             <span className="text-xs font-bold tracking-tight text-neutral-900">ToolModeOn</span>
           </div>

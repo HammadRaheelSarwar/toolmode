@@ -24,11 +24,13 @@ export function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
           <div>
             <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <img
-                src={logoUrl || "/logo.png"}
-                alt="ToolModeOn Logo"
-                className="h-8 md:h-9 w-auto object-contain"
-              />
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-neutral-950 p-1.5 shadow-xs shrink-0">
+                <img
+                  src={logoUrl || "/logo.png"}
+                  alt={`${brandName} Logo`}
+                  className="h-full w-full object-contain"
+                />
+              </span>
               <span className="text-base font-bold text-ink">{brandName}</span>
             </Link>
             <p className="mt-3.5 max-w-xs text-xs leading-relaxed text-muted">

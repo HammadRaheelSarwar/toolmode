@@ -95,17 +95,13 @@ export function SiteHeader() {
             className="flex items-center gap-2.5 shrink-0"
             onClick={() => setMobileOpen(false)}
           >
-            {logoUrl ? (
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-neutral-950 p-1.5 shadow-xs shrink-0">
               <img
-                src={logoUrl}
+                src={logoUrl || "/logo.png"}
                 alt={`${brandName} Logo`}
-                className="h-8 md:h-9 w-auto object-contain"
+                className="h-full w-full object-contain"
               />
-            ) : (
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-neutral-950 text-white shadow-xs">
-                <Zap size={16} className="fill-white" />
-              </span>
-            )}
+            </span>
             <span className="text-[17px] font-bold tracking-tight text-neutral-950">
               {brandName}
             </span>
